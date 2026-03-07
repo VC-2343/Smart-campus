@@ -1,0 +1,248 @@
+<html>
+ <head>
+  <title>
+   Profile - SmartCampus
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fc;
+        margin: 0;
+        padding: 0;
+    }
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        padding-top: 20px;
+        z-index: 1000;
+    }
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 24px;
+        color: #4e73df;
+    }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar ul li {
+        padding: 15px 20px;
+        font-size: 16px;
+        color: #5a5c69;
+    }
+    .sidebar ul li i {
+        margin-right: 10px;
+    }
+    .sidebar ul li a {
+        text-decoration: none;
+        color: inherit;
+    }
+    .sidebar ul li.active {
+        background-color: #f8f9fc;
+        color: #4e73df;
+    }
+    .sidebar ul li.active i {
+        color: #4e73df;
+    }
+    .content {
+        margin-left: 250px; /* Offset for sidebar */
+        padding: 20px;
+        min-height: 100vh;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .back-to-dashboard {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #4e73df;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .back-to-dashboard:hover { color: #224abe; }
+    .header .logo {
+        font-size: 24px;
+        color: #4e73df;
+    }
+    .header .search-bar {
+        display: flex;
+        align-items: center;
+    }
+    .header .search-bar input {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+    .profile {
+        max-width: 900px; /* Prevents stretching */
+        margin: 0 auto; /* Centers content */
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .profile h1 {
+        font-size: 24px;
+        color: #4e73df;
+        margin-bottom: 10px;
+    }
+    .profile .breadcrumb {
+        font-size: 14px;
+        color: #858796;
+        margin-bottom: 20px;
+    }
+    .card {
+        background-color: #f8f9fc;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #e3e6f0;
+    }
+    .card h2 {
+        font-size: 20px;
+        color: #4e73df;
+        margin-bottom: 15px;
+    }
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #5a5c69;
+    }
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d3e2;
+        border-radius: 5px;
+    }
+    .btn-save {
+        background-color: #4e73df;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .btn-save:hover { background-color: #2e59d9; }
+
+    .profile-details p {
+        font-size: 16px;
+        color: #5a5c69;
+        margin: 10px 0;
+    }
+    .profile-details p span {
+        font-weight: 700;
+        color: #4e73df;
+        width: 120px;
+        display: inline-block;
+    }
+    .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #fff;
+        margin-left: 250px;
+        color: #858796;
+        font-size: 14px;
+    }
+  </style>
+ </head>
+ <body>
+  <div class="sidebar">
+   <h2>SmartCampus</h2>
+   <ul>
+    <li><i class="fas fa-tachometer-alt"></i><a href="/dashboard">Dashboard</a></li>
+    <li><i class="fas fa-cogs"></i><a href="/component">Features</a></li>
+    <li class="active"><i class="fas fa-user"></i><a href="/profile">Profile</a></li>
+    <li><i class="fas fa-question-circle"></i><a href="/contact">Contact</a></li>
+   </ul>
+  </div>
+
+  <div class="content">
+   <div class="header">
+    <a href="/dashboard" class="back-to-dashboard"><i class="fas fa-arrow-left"></i> Dashboard</a>
+    <div class="logo">SmartCampus</div>
+    <div class="search-bar">
+     <input placeholder="Search" type="text"/>
+     <i class="fas fa-search"></i>
+    </div>
+    <div class="user-info"><span></span></div>
+   </div>
+
+   <div class="profile">
+    <h1>Profile</h1>
+    <div class="breadcrumb">
+     <a href="/dashboard">Home</a> / Users / Profile
+    </div>
+
+    <% if (!user.isProfileComplete) { %>
+    <div class="card">
+        <h2>Complete Your Profile</h2>
+        <form action="/profile/update" method="POST">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="fullName" placeholder="Enter full name" required>
+            </div>
+            <div class="form-group">
+                <label>Department</label>
+                <input type="text" name="department" placeholder="e.g. Information Technology" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" name="phone" placeholder="Enter phone number" required>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <textarea name="about" rows="2" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            <button type="submit" class="btn-save">Save Profile</button>
+        </form>
+    </div>
+
+    <% } else { %>
+    <div class="card">
+     <h2><%= user.fullName %></h2>
+     <p><%= user.department %> (<%= user.role %>)</p>
+    </div>
+
+    <div class="card">
+     <h2>Overview</h2>
+     <div class="profile-details">
+      <p><span>About:</span> <%= user.about %></p>
+      <p><span>Phone:</span> <%= user.phone %></p>
+      <p><span>Email:</span> <%= user.email %></p>
+     </div>
+     <hr style="border: 0; border-top: 1px solid #e3e6f0; margin: 20px 0;">
+     <a href="javascript:void(0)" onclick="alert('Feature coming soon: Edit Mode')" style="color: #4e73df; text-decoration: none; font-size: 14px;">Edit Profile Info</a>
+    </div>
+    <% } %>
+
+   </div>
+  </div>
+
+  <div class="footer">
+   <p>© Copyright Team NexTech All Rights Reserved</p>
+  </div>
+ </body>
+</html>

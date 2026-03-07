@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Gateway — SmartCampus</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header { background: #2563eb; color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .header a { color: white; text-decoration: none; font-weight: bold; border: 1px solid white; padding: 8px 15px; border-radius: 5px; }
+
+        .book-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .book-card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.3s;
+        }
+
+        .book-card:hover { transform: translateY(-5px); }
+        .book-card h4 { margin: 0 0 10px 0; color: #1e293b; }
+        .book-card p { color: #64748b; font-size: 0.9rem; margin-bottom: 15px; }
+
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-issue { background: #2563eb; color: white; }
+        .btn-disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
+
+        .rentals-table { width: 100%; background: white; border-radius: 10px; border-collapse: collapse; margin-bottom: 40px; overflow: hidden; }
+        .rentals-table th, .rentals-table td { padding: 15px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+        .rentals-table th { background: #f8fafc; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1 style="margin:0;">Library Gateway</h1>
+                <p style="margin:5px 0 0 0;">Browse our complete collection</p>
+            </div>
+            <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+        </div>
+
+        <% if (myBooks.length > 0) { %>
+            <h2 style="color: #1e293b;"><i class="fas fa-bookmark"></i> My Current Rentals</h2>
+            <table class="rentals-table">
+                <thead>
+                    <tr><th>Book Title</th><th>Return Date</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                    <% myBooks.forEach(book => { %>
+                        <tr>
+                            <td><strong><%= book.title %></strong></td>
+                            <td>14 Days from today</td>
+                            <td>
+                                <form action="/library/return/<%= book._id %>" method="POST">
+                                    <button class="btn" style="background:#fee2e2; color:#991b1b; width:auto;">Return Book</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+
+        <h2 style="color: #1e293b;"><i class="fas fa-book-open"></i> Full Catalog (<%= books.length %> Books)</h2>
+        <div class="book-grid">
+            <% books.forEach(book => { %>
+                <div class="book-card">
+                    <div>
+                        <span style="font-size:0.7rem; color:#2563eb; font-weight:bold; text-transform:uppercase;"><%= book.category %></span>
+                        <h4><%= book.title %></h4>
+                        <p>By <%= book.author %></p>
+                    </div>
+
+                    <% if (book.availableCopies > 0 && !myBooks.some(mb => mb._id.toString() == book._id.toString())) { %>
+                        <form action="/library/issue/<%= book._id %>" method="POST">
+                            <button class="btn btn-issue">Issue Book</button>
+                        </form>
+                    <% } else if (myBooks.some(mb => mb._id.toString() == book._id.toString())) { %>
+                        <button class="btn btn-disabled">Borrowed</button>
+                    <% } else { %>
+                        <button class="btn btn-disabled">Out of Stock</button>
+                    <% } %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
